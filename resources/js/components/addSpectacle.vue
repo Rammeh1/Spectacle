@@ -3,17 +3,16 @@
         <h6>Ajout de Spectacle</h6>
         <div class="row">
             <div class="col-md-3">
-                .
                 <label for="piece" class="form-label">Pièce</label>
-                <select class="form-control" v-model="spectacle.idpiece">
+                <select class="form-control" v-model="spectacle.pieceID">
                     <option v-for="pc in pieces" :key="pc.id" :value="pc.id">
-                        {{ pc.libelle }}
+                        {{ pc.titre }}
                     </option>
                 </select>
             </div>
             <div class="col-md-3">
                 <label for="salle" class="form-label">Salle</label>
-                <select class="form-control" v-model="spectacle.idsalle">
+                <select class="form-control" v-model="spectacle.salleID">
                     <option v-for="sl in salles" :key="sl.id" :value="sl.id">
                         {{ sl.libelle }}
                     </option>
@@ -27,7 +26,7 @@
                     type="text"
                     class="form-control"
                     id="date"
-                    vmodel="spectacle.datespectacle"
+                    v-model="spectacle.datespectacle"
                 />
             </div>
         </div>
@@ -37,11 +36,11 @@
         </button>
     </form>
 </template>
-<style scoped></style>
 <script setup>
 /* Les imports nécessaires*/
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import axios from "axios";
 const router = useRouter();
 const spectacle = ref({});
 const salles = ref([]);
@@ -70,7 +69,7 @@ const addSpectacle = async () => {
     await axios
         .post("http://localhost:8000/api/spectacles/", spectacle.value)
         .then(() => router.push({ name: "spectacles" }))
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(spectacle.value));
 };
 onMounted(() => {
     getSalles();

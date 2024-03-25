@@ -7,7 +7,7 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-success">
                 <div class="container-fluid">
                     <router-link
-                        :to="{ name: 'addSpectacle' }"
+                        :to="{ name: 'AddSpectacles' }"
                         class="btn btnoutline-light"
                     >
                         Ajouter Spectacle
@@ -28,12 +28,16 @@
                     <tr v-for="spectacle in spectacles" :key="spectacle.id">
                         <td>{{ spectacle.datespectacle }}</td>
                         <td>{{ spectacle.salle.libelle }}</td>
-                        <td>{{ spectacle.piece.libelle }}</td>
+                        <td>{{ spectacle.piece.titre }}</td>
 
                         <td>
-                            class="btn btn-outline-warning mx-2"
-                            <i class="fa-solid fa-pen-to-square"></i>
-                            Modifier
+                            <button
+                                class="btn btn-outline-warning mx-2"
+                                @click="deleteSpectacle(spectacle.id)"
+                            >
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                Modifier
+                            </button>
                         </td>
                         <td>
                             <button
@@ -56,13 +60,14 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 
 const spectacles = ref([]);
+const salles = ref([]);
 const isLoading = ref(true);
 
 const getSpectacles = async () => {
     await axios
         .get("http://localhost:8000/api/spectacles")
         .then((res) => {
-            salles.value = res.data;
+            spectacles.value = res.data;
             isLoading.value = false;
         })
         .catch((error) => {
@@ -73,10 +78,10 @@ const getSpectacles = async () => {
 onMounted(() => {
     getSpectacles();
 });
-const deleteSalle = async (id) => {
+const deleteSpectacle = async (id) => {
     try {
         await axios.delete(`http://localhost:8000/api/spectacles/${id}`);
-        getSalles();
+        getSpectacles();
     } catch (error) {
         console.error(error);
     }

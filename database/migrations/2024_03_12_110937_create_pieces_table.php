@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('pieces', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
+            $table->string('flyer');
             $table->timestamps();
         });
     }

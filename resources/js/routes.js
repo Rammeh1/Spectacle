@@ -1,8 +1,8 @@
 import AddSalles from './components/addSalle.vue';
 import Salles from './components/salle.vue';
 import EditSalles from './components/editSalles.vue';
-import AddSpectacles from './components/AddSpectacle';
-import Spectacles from './components/Spectacle';
+import AddSpectacles from './components/addSpectacle.vue';
+import Spectacles from './components/spectacle.vue';
 export const routes = [
     {
         name: 'salles',
